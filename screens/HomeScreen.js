@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
   getWord = (word) => {
     var keyword = word.toLowerCase().trim();
     var url =
-      "https://rupinwhitehatjr.github.io/dictionary/" + keyword + ".json";
+      "https://api.dictionaryapi.dev/api/v2/entries/en/" + keyword;
     console.log(url);
     return fetch(url)
       .then((data) => {
@@ -34,10 +34,16 @@ export default class HomeScreen extends React.Component {
       })
       .then((response) => {
         var responseObject = response;
+
         if (responseObject) {
-          var wordData = responseObject.definitions[0];
-          var definition = wordData.description;
-          var type = wordData.wordtype;
+          /*Maam Over Here I need to have responseObject[0].meanings[0]-- for some words and 
+          for some words I need responseObject[1].meanings[0]*/
+          var wordData = responseObject[0].meanings[0]; 
+
+          var definition = wordData.definitions[0].definition;
+
+          var type = wordData.partOfSpeech;
+
           this.setState({
             word: this.state.text,
             definition: definition,
