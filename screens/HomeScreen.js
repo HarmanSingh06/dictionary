@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import DB from '../database';
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -21,40 +22,15 @@ export default class HomeScreen extends React.Component {
 
   getWord = (word) => {
     var keyword = word.toLowerCase().trim();
-    var url =
-      "https://api.dictionaryapi.dev/api/v2/entries/en/" + keyword;
-    console.log(url);
-    return fetch(url)
-      .then((data) => {
-        if (data.status === 200) {
-          return data.json();
-        } else {
-          return null;
-        }
-      })
-      .then((response) => {
-        var responseObject = response;
+    var wordData = DB[keyword]
+    var definition = wordData.definition;
+    var type = wordData.lexicalCategory;
 
-        if (responseObject) {
-          /*Maam Over Here I need to have responseObject[0].meanings[0]-- for some words and 
-          for some words I need responseObject[1].meanings[0]*/
-          var wordData = responseObject[0].meanings[0]; 
-
-          var definition = wordData.definitions[0].definition;
-
-          var type = wordData.partOfSpeech;
-
-          this.setState({
-            word: this.state.text,
-            definition: definition,
-            type: type,
-          });
-        } else {
-          this.setState({
-            word: this.state.text,
-          });
-        }
-      });
+    this.setState({
+      word: keyword,
+      definition: definition,
+      type: type
+    })
   };
   /*componentDidUpdate(){
   }*/
