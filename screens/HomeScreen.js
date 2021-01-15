@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import DB from '../database';
+import {Header} from 'react-native-elements'
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -37,6 +38,12 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View>
+        <Header centerComponent = {
+          {
+            text:'Dictionary',
+            style:{fontSize:30,margintop:-40}
+          }
+        }/>
         <TextInput
           style={styles.inputBox}
           onChangeText={(text) => {
